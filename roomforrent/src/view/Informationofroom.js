@@ -1,5 +1,6 @@
-import { useState } from "react";
+
 import { useSearchParams } from "react-router-dom";
+import { useState,useEffect } from "react";
 
 import Container from "react-bootstrap/Container";
 import Card from "react-bootstrap/Card";
@@ -8,44 +9,45 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
 import Maps from "../Component/Mapsrooms";
 import Menu from "../Component/MenuListRoom";
 import Senddata from "../Component/Senddata"
 
-const Informationroom = () => {
-  const [searchParams] = useSearchParams();
-  //atoa ถอดรหัสแบบ Base64
-  const id = atob(searchParams.get("room")).replace('"', "").replace('"', " ");
+const Informationroom =  () => {
+  const [data,setData] =  useState([])
+  const [searchParams] =  useSearchParams();
+  const numroomid =  searchParams.get("room");
+  const id =  numroomid
   //ยิงขอข้อมุลจาก API BackEnd
-
-  
+  useEffect(() => {
+     fetch("http://localhost:4000/DataRoom?idroom="+id)
+    .then(res=>res.json())
+    .then(getdata=>{ setData(getdata[0])})
+  }, [id])
   return (
     <>
       <Navbar />
       <br></br>
       <Container>
-        <div>หน้ารายละเอียด {id}</div>
+        <div>หน้ารายละเอียด</div>
         <br></br>
         <Card>
           <Card.Title style={{ padding: "15px" }}>
-              <Form.Label className="float-start">ชื่อห้อง</Form.Label>
+              <Form.Label className="float-start">{data.Name}</Form.Label>
               <Form className="float-end">
                 <Senddata roomid={id}/>
               </Form>
               <br></br>
               <br></br>
-              <Form.Label className="fs-6 text">ที่อยู่</Form.Label>
               <Tabs
                 defaultActiveKey="Image"
                 id="uncontrolled-tab-example"
                 className="mb-3"
               >
                 <Tab eventKey="Image" title="รูปภาพ">
-                  <Menu />
+                  <Menu  img1={data.Img} nameroom={data.Name}/>
                 </Tab>
                 <Tab eventKey="Maps" title="แผนที่">
                   <Maps />

@@ -1,0 +1,15 @@
+const DataRoom = [
+  {
+    id: "1",
+    name: "รุ่งอรุณแมนชั่น",
+    img1: "https://bcdn.renthub.in.th/listing_picture/201708/20170801/iv1R28F5J8xCUc1WMwvT.jpg?class=doptimized",
+    img2: "https://bcdn.renthub.in.th/listing_picture/201708/20170801/RUwZZmebNWvwkfDnbs88.jpg?class=doptimized",
+    infor: {
+      name: "1 Bedroom",
+      typeroom: "1 ห้องนอน",
+      size: "35 ตรม.",
+      price: "11,000 บาท",
+      Local: "ซ.นภาศัพท์ 2 ถ.สุขุมวิท 36 คลองตัน คลองเตย กรุงเทพมหานคร",
+    },
+  }
+];

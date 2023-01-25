@@ -1,6 +1,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin Login</title>
     <link
@@ -31,12 +32,17 @@
           <div class="col-lg-8">
             <div class="card-body py-5 px-md-5">
 
-              <form method="POST" action="/CheckLogin">
+              <form >
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                  <label class="form-label" for="form2Example1">Email address &
+                  <label class="form-label" for="form2Example1">
                     Username</label>
-                  <input type="text" name="user" id="form2Example1" class="form-control" />
+                  <input
+                    type="text"
+                    name="user"
+                    id="form2Example1"
+                    class="form-control"
+                  />
 
                 </div>
 
@@ -65,7 +71,7 @@
                         checked
                       />
                       <label class="form-check-label" for="form2Example31">
-                        Remember 
+                        Remember
                       </label>
                     </div>
                   </div>
@@ -79,9 +85,10 @@
                   <div class="col-auto">
                     <!-- Submit button -->
                     <button
-                      type="submit"
+                      type="button"
                       class="btn btn-primary btn-block mb-4"
-                    >Sign in</button>
+                      onclick="CheckLogin()"
+                    >เข้าสู่ระบบ</button>
                   </div>
                 </div>
 
@@ -92,6 +99,8 @@
         </div>
       </div>
     </section>
+    <!--Jquery Library-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Section: Design Block -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -99,7 +108,21 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      
+        function CheckLogin(){
+          var user = document.getElementById('form2Example1').value
+          var pass = document.getElementById('form2Example2').value
+          $.ajax({
+            type:"POST",
+            url:"/CheckLogin",
+            data:{user,pass},
+          }).done(function(data){
+            if(data == "Success"){
+              window.location.href="/AdminMain"
+            }else{
+              alert('รหัสผ่านหรือชื่อผู้ใช่งานไม่ถูกต้อง')
+            }
+          })
+        }
     </script>
   </body>
 </html>

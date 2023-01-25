@@ -1,0 +1,41 @@
+const DataRoom1 = props.DataRoom;
+  const listItem = DataRoom1.map((dataquery, index) => (
+    <Col
+      md={4}
+      className="d-flex justify-content-around "
+      style={{ paddingTop: "15px" }}
+      key={index}
+    >
+      <Card
+        className="h-100"
+        border="dark"
+        style={{
+          cursor: "pointer",
+        }}
+        key={dataquery.ID + index}
+        onClick={() => Toinformation(JSON.stringify(dataquery.ID))}
+      >
+        <Card.Img variant="top" key={dataquery.Img + index} src={dataquery.Img} />
+        <Card.Body>
+          <Card.Title
+            className="text-center"
+            style={{ backgroundColor: "#F85454", color: "white" }}
+            key={dataquery.Price + index}
+          >
+            {dataquery.Price}
+          </Card.Title>
+          <div>
+            <div
+              className="fw-bold text-wrap fs-6"
+              style={{ color: "#F8C554" }}
+              key={dataquery.Name + index}
+            >
+              {dataquery.Name}
+            </div>
+
+            
+          </div>
+        </Card.Body>
+      </Card>
+    </Col>
+  ));

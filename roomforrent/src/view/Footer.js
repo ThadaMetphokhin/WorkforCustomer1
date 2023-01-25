@@ -2,19 +2,20 @@ import Container from "react-bootstrap/esm/Container";
 const SetFooter = () => {
   return (
     <>
-      <Container
+      <footer
         style={{
-          backgroundColor: "green",
-          paddingBottom: "15px",
+          backgroundColor: "gray",
+          textAlign: "center",
           marginTop: "auto",
+          padding: "8px",
         }}
       >
         <Container fluid className="text-center">
           <div className="fw-bold" style={{ color: "white" }}>
-            Copy. Mr.ChangThai
+            Copy. Mr.Test
           </div>
         </Container>
-      </Container>
+      </footer>
     </>
   );
 };

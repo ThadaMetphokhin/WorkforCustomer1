@@ -9,6 +9,7 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+
   </head>
   <body>
     <header>
@@ -34,7 +35,7 @@
               <h5
                 class="offcanvas-title"
                 id="offcanvasNavbarLabel"
-              >Offcanvas</h5>
+              >รายการเมนู</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -52,7 +53,10 @@
                   >หน้าแรก</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-center" href="/MeetingRoom">จัดการห้องประชุม</a>
+                  <a
+                    class="nav-link text-center"
+                    href="/MeetingRoom"
+                  >จัดการห้องประชุม</a>
                 </li>
 
               </ul>
@@ -60,7 +64,7 @@
               <form method="POST" action="/Logout">
                 <br /><br />
                 <p class="text-center">หน้าสำหรับแอดมิน</p>
-                <p class="text-center">ยินดีตอนรับคุณ: {{name}}</p>
+                <p class="text-center">ยินดีตอนรับคุณ: {{this.nameadmin}}</p>
                 <div class="text-center"><button
                     class="btn btn-danger"
                     type="submit"
@@ -72,11 +76,38 @@
         </div>
       </nav>
     </header>
-    <br><br><br>
+    <br /><br /><br />
     <!-- Section: Design Block -->
-    <section class="text-center text-lg-start container">
-      <div class="card">
-          <p>Home</p>
+    <section class=" text-lg-start container">
+      <div class="card" style="padding:20px">
+        <p>ตรวจสอบรายการจองห้องประชุม</p>
+
+        <table class="table text-center table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">{{name}}</th>
+              <th scope="col">First Name</th>
+              <th scope="col">ชื่อสกุล</th>
+              <th scope="col">Email</th>
+              <th scope="col">เบอร์โทร</th>
+              <th scope="col">การยืมของ</th>
+              <th scope="col">วันที่</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each history}}
+              <tr>
+                <td scope="row">{{this.ID}}</td>
+                <td>{{this.Roomname}}</td>
+                <td>{{this.Name}} {{this.LastName}}</td>
+                <td>{{this.Email}}</td>
+                <td>{{this.Phone}}</td>
+                <td>{{this.BorrowItems}}</td>
+                <td>{{this.Day}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
       </div>
     </section>
     <!-- Section: Design Block -->

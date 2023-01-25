@@ -12,9 +12,11 @@ import { Doughnut, Bar } from "react-chartjs-2";
 
 import Navbar from "./Navbar";
 import Container from "react-bootstrap/esm/Container";
-import Table from "react-bootstrap/Table";
 import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
+
+
+import SetFooter from "./Footer";
 
 ChartJS.register(
   ArcElement,
@@ -124,6 +126,7 @@ const Borrow = () => {
           </Form.Select>
         </Card>
       </Container>
+      <SetFooter/>
     </>
   );
 };
