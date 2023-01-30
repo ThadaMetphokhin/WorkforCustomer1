@@ -1,26 +1,19 @@
-import Modal from "react-bootstrap/Modal";
-
-import Day from "./Day";
-import Month from "./Month";
-//import Year from "./Year";
-
-import "react-calendar/dist/Calendar.css";
+import Container from "react-bootstrap/esm/Container";
+import Navbar from "./Navbar";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import Modal from "react-bootstrap/Modal";
+import { Row, Col } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import { useCookies } from "react-cookie";
 
-import { useState } from "react";
-import { useCookies } from 'react-cookie';
-const Send = (props) => {
-  //Modal
+//comonent day
+import Dayfetch from "../Component/Dayfetch"
+import Month from "../Component/Month"
+
+function Tableset(props) {
   const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  //Form validate
-  const [validated, setValidated] = useState(false);
 
   //เก็บชื่อ,นามสกุล,email,เบอร์โทร,ยืมของ
   const [name, setName] = useState("");
@@ -30,13 +23,9 @@ const Send = (props) => {
   const [item, setItem] = useState([]);
   const [status, setStatus] = useState(false);
   const year = new Date();
-  const [cookies, setCookie] = useCookies([]);
-  //หากมีการกด Submit Form ฟังก์ชันนี้จะทำงาน
-  const handleSubmit = (event) => {
+
+  const updatedata = (e, index) => {
     
-    setCookie('name', [...name]);
-    const roomid = props.roomid;
-    const namrroom = props.roomname
     const totalday =
       document.getElementById("day11").value +
       "/" +
@@ -44,41 +33,63 @@ const Send = (props) => {
       "/" +
       document.getElementById("year11").value;
 
-    const fill= (item.filter((e) => e !== "" && e !== null )).toString();
-    const form = event.currentTarget;
+    const fill = item.filter((e) => e !== "" && e !== null).toString();
+
+    const form = e.currentTarget;
     if (form.checkValidity()) {
       setValidated(true);
-      const data1 = { namrroom, name, lname, email, phone, fill, totalday };
-      fetch("http://localhost:4000/InsertRoom", {
+      const data1 = { index, name, lname, email, phone, fill,totalday  };
+      fetch("http://localhost:4000/Userupdate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data1),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data === "Success") {
-            alert("จองสำเร็จ");
-            window.location.reload();
-          } else {
-            alert("ไม่สามารถจองได้");
-          }
-        });
-    } else {
-      event.preventDefault();
-
-      event.stopPropagation();
+      });
     }
   };
 
+  const deletedata = (index) => {
+    console.log("delete" + index);
+  };
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  //Form validate
+  const [validated, setValidated] = useState(false);
+
+  const index = props.index;
+  const data = props.value;
+
+  const setd = data.Day
   return (
     <>
-      <Button variant="success" onClick={handleShow}>
-        จองห้องประชุม
-      </Button>
+      <td key={data.ID + index}>{data.ID}</td>
+      <td key={data.Roomname + index}>{data.Roomname}</td>
+      <td key={data.Name + index}>
+        {data.Name}-{data.LastName}
+      </td>
+      <td key={data.Phone + index}>{data.Phone}</td>
+      <td key={data.BorrowItems + index}>{data.BorrowItems}</td>
+      <td key={data.Day + index}>{data.Day}</td>
+      <td>
+        <Button
+          variant={"warning"}
+          onClick={handleShow}
+          key={data.Name+index}
+        >
+          แก้ไข
+        </Button>{" "}
+        <Button
+          variant={"danger"}
+          key={data.ID+index}
+          onClick={(e) => deletedata(data.ID)}
+        >
+          ลบ
+        </Button>
+      </td>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -96,12 +107,12 @@ const Send = (props) => {
                 <Row>
                   <Col className="col-auto">
                     <Form.Select id="day11">
-                      <Day />
+                      <Dayfetch  dayset={setd} />
                     </Form.Select>
                   </Col>
                   <Col>
                     <Form.Select id="month11">
-                      <Month />
+                      <Month/>
                     </Form.Select>
                   </Col>
                   <Col className="col-3">
@@ -179,8 +190,8 @@ const Send = (props) => {
                             label={`${type}`}
                             onChange={(e) => {
                               if (e.target.checked == false) {
-                                item[index]=null
-                                return
+                                item[index] = null;
+                                return;
                               }
                               item[index] = type;
                             }}
@@ -198,11 +209,7 @@ const Send = (props) => {
               <Button variant="secondary" onClick={handleClose}>
                 ปิด
               </Button>
-              <Button
-                variant="primary"
-                type="button"
-                onClick={(e) => handleSubmit(e)}
-              >
+              <Button variant="primary" type="button" key={data.ID+index} onClick={(e)=>updatedata(e,data.ID)}>
                 ส่งข้อมูล
               </Button>
             </Modal.Footer>
@@ -211,6 +218,50 @@ const Send = (props) => {
       </Modal>
     </>
   );
-};
+}
 
-export default Send;
+function EditRentRoom() {
+  const [cookies, setCookie] = useCookies(["name"]);
+  const [data, setData] = useState([]);
+  const name = cookies;
+  useEffect(() => {
+    fetch("http://localhost:4000/UserEditRoom", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: JSON.stringify(name),
+    })
+      .then((res) => res.json())
+      .then((getdata) => setData(getdata));
+  }, []);
+  const TableQuery = data.map((value, index) => (
+    <Tableset key={value + index} value={value} index={index} />
+  ));
+  return (
+    <>
+      <Navbar />
+      <Container>
+        <br></br>
+        <Table striped bordered hover className="text-center">
+          <thead>
+            <tr>
+              <th>ลำดับที่</th>
+              <th>ชื่อห้องที่จอง</th>
+              <th>ชื่อ-นามสกุล</th>
+              <th>เบอร์</th>
+              <th>การยืมของ</th>
+              <th>วันที่จอง</th>
+              <th>แก้ไข</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>{TableQuery}</tr>
+          </tbody>
+        </Table>
+      </Container>
+    </>
+  );
+}
+export default EditRentRoom;

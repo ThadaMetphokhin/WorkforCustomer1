@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Admin MeetingRoom</title>
+    <title>Admin ListBorrowItems</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -79,131 +79,35 @@
     <!-- Section: Design Block -->
 
     <section class="container">
-      <p class="text-center">รายการห้องประชุม</p>
+      <p class="text-center">รายการยืมอุปกรณ์</p>
 
       <div class="card" style="padding:20px">
         <div class="row mb-2">
           <div class="col">
             <!-- Button trigger modal -->
-            <div class="float-end">
-              <label style="padding-right: 10px;">เพิ่มห้องประชุม:</label><span
-              ><button
-                  type="button"
-                  class="btn btn-primary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#insert1"
-                >
-                  เพิ่ม
-                </button></span>
-            </div>
-          </div>
+            
         </div>
-        <!-- Modal -->
-        <div
-          class="modal fade"
-          id="insert1"
-          tabindex="-1"
-          aria-labelledby="exampleModalLabelinsert"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1
-                  class="modal-title fs-5"
-                  id="exampleModalLabelinsert"
-                >เพิ่มห้อง</h1>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <form class="">
-                        <div class="row d-flex align-content-center">
-                          <div class="col-auto">
-                            <label for="name{{this.ID}}">ชื่อห้องประชุม</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="name{{this.ID}}"
-                              value="{{this.Name}}"
-                            />
-                          </div>
-                          <div class="col-auto">
-                            <label for="price{{this.ID}}">ราคาเช่า</label>
-                            <input
-                              type="text"
-                              class="form-control"
-                              id="price{{this.ID}}"
-                              value="{{this.Price}}"
-                            />
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col">
-                            <label for="des{{this.ID}}">รายละเอียด</label>
-                            <textarea
-                              style="height: 120px;"
-                              type="text"
-                              class="form-control"
-                              id="des{{this.ID}}"
-                              placeholder="ใส่รายละเอียด"
-                            >{{this.Des}}</textarea>
-                          </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                          <div class="col">
-                            <div class="mb-3">
-                              <label
-                                for="formFile"
-                                class="form-label"
-                              >รูปแสดงตัวอย่างห้องประชุม</label>
-                              <input
-                                class="form-control"
-                                type="file"
-                                id="file{{this.ID}}"
-                                name="file{{this.ID}}"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                      </form>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  data-bs-dismiss="modal"
-                >ปิด</button>
-                <button
-                  type="button"
-                  class="btn btn-success"
-                  onclick="insertdata()"
-                >บันทึก</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        
 
         <table class="table table-bordered text-center">
 
           <thead>
             <tr>
               <th scope="col">ลำดับ</th>
-              <th scope="col">ห้อง</th>
-              <th scope="col">แก้ไข</th>
+              <th scope="col">ชื่อห้องประชุม</th>
+              <th scope="col">ชื่อผู้เช่า</th>
+              <th scope="col">เบอร์โทร</th>
+              <th scope="col">การยืมของ</th>
             </tr>
           </thead>
           <tbody>
             {{#each datasend}}
               <tr>
                 <th scope="row">{{this.ID}}</th>
-                <td>{{this.Name}}</td>
+                <td>{{this.Roomname}}</td>
+                <td>{{this.Name}} {{this.LastName}}</td>
+                <td>{{this.Phone}}</td>
+                <td>{{this.BorrowItems}}</td>
                 <td><!-- Button trigger modal -->
                   <button
                     type="button"

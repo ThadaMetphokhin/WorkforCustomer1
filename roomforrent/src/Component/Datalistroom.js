@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import React, { useEffect, useState } from "react";
 
 const Toinformation = (data) => {
-  //btoa เข้ารหัสแบบ Base64
+  //
   const url = "/Information?room=" + data;
   window.location.href = url;
 };

@@ -14,8 +14,8 @@ import Form from "react-bootstrap/Form";
 import Maps from "../Component/Mapsrooms";
 import Menu from "../Component/MenuListRoom";
 import Senddata from "../Component/Senddata"
-
 const Informationroom =  () => {
+  
   const [data,setData] =  useState([])
   const [searchParams] =  useSearchParams();
   const numroomid =  searchParams.get("room");
@@ -37,7 +37,7 @@ const Informationroom =  () => {
           <Card.Title style={{ padding: "15px" }}>
               <Form.Label className="float-start">{data.Name}</Form.Label>
               <Form className="float-end">
-                <Senddata roomid={id}/>
+                <Senddata roomid={id} roomname={data.Name}/>
               </Form>
               <br></br>
               <br></br>
