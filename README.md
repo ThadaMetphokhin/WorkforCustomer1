@@ -18,5 +18,5 @@
 
 ## Admin Login
 
-User: Admin
-Pass: 1234 
+ - User: Admin \n
+ - Pass: 1234 
